@@ -1,0 +1,102 @@
+---
+title: "3510 Workshop 1"
+output: html_document
+date: "2026-09-17"
+---
+
+```{r}
+
+#Add July month with sales revenue 17 to the plot and change the fill colour to green
+barchart_data <- c(10, 15, 20, 5, 17) 
+barchart_labels <- c("Mar", "Apr", "May", "Jun", "July") 
+print(barplot(barchart_data, names.arg=barchart_labels, xlab="Month", ylab="Sales Revenue", col="green", main ="Revenue chart", border="blue") )
+
+```
+```{r}
+# Add x label as "Sales Revenue" and y label as " Month"
+barplot(barchart_data, names.arg=barchart_labels, xlab="Sales Revenue", ylab= "Month", col="red", main ="Revenue chart", border="blue", horiz=TRUE) 
+
+```
+
+```{r}
+# Move the legend to topleft and make the stacked chart vertical
+ 
+colors = c("green","orange","brown")
+months <- c("Mar","Apr","May","Jun","Jul") 
+regions <- c("East","West","North") # Create the matrix of the values. 
+Values <- matrix(c(2,9,3,11,9,4,8,7,3,12,5,2,8,10,11), nrow = 3, ncol = 5, byrow = TRUE) 
+
+# Create the stacked bar chart 
+barplot(Values, main = "Sales Revenue", names.arg = months, xlab = "Revenue", ylab = "Month", col = colors) 
+legend("topleft", regions, cex = 1.3, fill = colors)
+```
+```{r}
+#Add Nova Scotia (NS) to the list of provinces with sales value 12 and add a label to the chart "Sales by Province"
+library(ggplot2) 
+slices <- c(10, 15, 10, 5, 8, 12) 
+labels <- c("ON","QUE", "SK", "MAN", "BC", "NS") 
+pie(slices, labels = labels, main="Sales by Province") 
+
+```
+```{r}
+
+# Change the seed from 1 to 42, how does it change the plot? Comment the answer 
+set.seed(42) 
+distr_data <- rnorm(1000, mean=20.5, sd=5.5) 
+boxplot(distr_data) 
+boxplot(distr_data, notch=TRUE) 
+
+```
+```{r}
+# histogram example 
+hist(distr_data) # change the number of bins to 5 and the border to black, why did the plot change with the number of bins
+hist(distr_data, breaks = 20)
+```
+```{r}
+#Change the colour of the plot to purple
+d <- density(distr_data)
+plot(d, main="Sale Amount Distribution")
+polygon(c(d$x, rev(d$x)),
+        c(d$y, rep(0, length(d$y))),
+        col = "purple", border = "black")
+
+```
+```{r}
+
+library(beeswarm) # plot with default settings 
+beeswarm(distr_data) 
+# change the orientation to horizontal and the plot points to a hollow triangle
+beeswarm(distr_data, pch=2, horizontal = TRUE) 
+
+```
+```{r}
+
+# using a built-in dataset 
+ToothGrowth$dose <- as.factor(ToothGrowth$dose) 
+head(ToothGrowth) # basic plot
+p <- ggplot(ToothGrowth, aes(x=dose, y=len)) + geom_violin()
+p 
+p + geom_boxplot(width=0.1) # add A boxplot with width 0.1 to the beehive 
+p + geom_dotplot(binaxis='y', stackdir='center', dotsize=1) 
+
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
